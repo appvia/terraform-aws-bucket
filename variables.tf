@@ -37,7 +37,7 @@ variable "attach_policy" {
 variable "attach_public_policy" {
   description = "Controls if a user defined public bucket policy will be attached (set to `false` to allow upstream to apply defaults to the bucket)"
   type        = bool
-  default     = true
+  default     = false
 }
 
 variable "bucket" {
@@ -55,7 +55,7 @@ variable "bucket_prefix" {
 variable "acl" {
   description = "(Optional) The canned ACL to apply. Conflicts with `grant`"
   type        = string
-  default     = null
+  default     = "private"
 }
 
 variable "policy" {
@@ -169,25 +169,25 @@ variable "object_lock_enabled" {
 variable "block_public_acls" {
   description = "Whether Amazon S3 should block public ACLs for this bucket."
   type        = bool
-  default     = false
+  default     = true
 }
 
 variable "block_public_policy" {
   description = "Whether Amazon S3 should block public bucket policies for this bucket."
   type        = bool
-  default     = false
+  default     = true
 }
 
 variable "ignore_public_acls" {
   description = "Whether Amazon S3 should ignore public ACLs for this bucket."
   type        = bool
-  default     = false
+  default     = true
 }
 
 variable "restrict_public_buckets" {
   description = "Whether Amazon S3 should restrict public bucket policies for this bucket."
   type        = bool
-  default     = false
+  default     = true
 }
 
 variable "control_object_ownership" {
