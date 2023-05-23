@@ -8,7 +8,7 @@ resource "aws_iam_policy" "bucket_policy" {
   ]
 
   description = "Allow"
-  name        = format("%s-%s", var.configuration, var.environment)
+  name        = local.name
   path        = "/"
 
   policy = jsonencode({
@@ -24,8 +24,7 @@ resource "aws_iam_policy" "bucket_policy" {
           "s3:PutObject"
         ],
         "Resource" : [
-          "arn:aws:s3:::*/*",
-          "arn:aws:s3:::${bucket}"
+          "arn:aws:s3:::${var.bucket_name}"
         ]
       }
     ]
