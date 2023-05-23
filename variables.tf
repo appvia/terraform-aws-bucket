@@ -8,6 +8,17 @@ variable "cluster_name" {
   description = "The name of the EKS cluster which the configuration resides in"
 }
 
+variable "bucket_name" {
+  type        = string
+  description = "The name of the S3 bucket which the configuration resides in"
+}
+
+variable "bucket_acl" {
+  type        = string
+  description = "The canned ACL to apply to the bucket"
+  default     = "private"
+}
+
 variable "environment" {
   type        = string
   description = "The environment which the configuration resides in"
@@ -18,7 +29,7 @@ variable "eks_issuer_url" {
   description = "Is the URL of the OIDC issuer of the EKS cluster."
 }
 
-variable "service_account_namespace" {
+variable "namespace" {
   type        = string
   description = "Is the namespace of the service account."
 }

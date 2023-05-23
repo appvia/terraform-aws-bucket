@@ -15,6 +15,7 @@ module "bucket" {
   version = "3.10.1"
 
   acl                      = var.bucket_acl
+  bucket                   = var.bucket_name
   control_object_ownership = var.bucket_control_object_ownership
   force_destroy            = true
   object_ownership         = var.bucket_object_ownership
@@ -28,7 +29,7 @@ module "bucket" {
 ## Provision the access for the service account
 module "irsa" {
   source  = "terraform-aws-modules/iam/aws//modules/iam-role-for-service-accounts-eks"
-  version = "3.10.1"
+  version = "5.20.0"
 
   role_name = format("%s-%s-%s", var.environment, var.namespace, var.configuration)
   role_policy_arns = {
@@ -39,7 +40,7 @@ module "irsa" {
   oidc_providers = {
     main = {
       provider_arn               = "${var.eks_issuer_url}"
-      namespace_service_accounts = ["${var.service_account_namespace}:${var.service_account_name}"]
+      namespace_service_accounts = ["${var.namespace}:${var.service_account_name}"]
     }
   }
 }

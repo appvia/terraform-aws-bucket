@@ -25,7 +25,7 @@ resource "aws_iam_policy" "bucket_policy" {
         ],
         "Resource" : [
           "arn:aws:s3:::*/*",
-          "arn:aws:s3:::${bucket}"
+          "arn:aws:s3:::${var.bucket_name}"
         ]
       }
     ]
