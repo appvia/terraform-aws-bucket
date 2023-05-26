@@ -1,5 +1,3 @@
-
-
 locals {
   tags = {
     Cluster       = var.cluster_name
@@ -24,15 +22,13 @@ module "bucket" {
   object_ownership         = var.bucket_object_ownership
   tags                     = local.tags
 
-  server_side_encryption_configuration = [
-    {
-      rule = {
-        apply_server_side_encryption_by_default = {
-          sse_algorithm = "AES256"
-        }
+  server_side_encryption_configuration = {
+    rule = {
+      apply_server_side_encryption_by_default = {
+        sse_algorithm = "AES256"
       }
     }
-  ]
+  }
 
   versioning = {
     enabled = var.enable_bucket_versioning
@@ -52,7 +48,7 @@ module "irsa" {
 
   oidc_providers = {
     main = {
-      provider_arn               = var.eks_issuer_url
+      provider_arn               = var.eks_issuer_arn
       namespace_service_accounts = [format("%s:%s", var.namespace, var.service_account_name)]
     }
   }

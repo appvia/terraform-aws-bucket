@@ -1,4 +1,4 @@
-output "bucket_arn" {
+output "bucket" {
   description = "The ARN of the bucket"
-  value       = module.s3_bucket.bucket_arn
+  value       = module.bucket.s3_bucket_arn
 }
