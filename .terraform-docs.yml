@@ -1,0 +1,29 @@
+content: |-
+  # Terraform Module: AWS S3 Bucket and IRSA
+
+  The "terraform-aws-bucket" Terraform Module provisions and manages an S3 Bucket with IRSA (IAM Roles for Service Accounts). IRSA can be used to grant access to the S3 Bucket from within a Kubernetes cluster, without the need for long lived IAM user credentials.
+
+  This module was designed to be used in conjunction with the [Appvia Terranetes Controller](https://github.com/appvia/terranetes-controller).
+
+  ## Deployment
+
+  Provision this Terraform Module by creating a `Configuration` resource in your Kubernetes cluster, as follows:
+  ```yaml
+  {{ include "examples/terranetes/configuration.yml" }}
+  ```
+
+  This has a dependency on a `default` Terranetes Context being available within the Cluster, which contains an `eks_oidc_issuer` and `eks_name`. You can auto-generate the `default` context by updating the aws `Provider` resource in your Kubernetes cluster, as follows (set your aws eks cluster name as appropriate):
+  ```yaml
+  {{ include "examples/terranetes/provider.yml" }}
+  ```
+
+  ## Updating Docs
+
+  The `terraform-docs` utility is used to generate this README. Follow the below steps to update:
+  1. Make changes to the `.terraform-docs.yml` file
+  2. Fetch the `terraform-docs` binary (https://terraform-docs.io/user-guide/installation/)
+  3. Run `terraform-docs markdown table --output-file ${PWD}/README.md --output-mode inject .`
+
+  {{ .Inputs }}
+
+  {{ .Outputs }}

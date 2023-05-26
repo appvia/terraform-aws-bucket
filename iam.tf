@@ -1,12 +1,4 @@
-
-#
-## IAM Permissions to the S3 bucket
-#
 resource "aws_iam_policy" "bucket_policy" {
-  depends_on = [
-    module.bucket
-  ]
-
   description = "Allow"
   name        = local.name
   path        = "/"
@@ -24,7 +16,7 @@ resource "aws_iam_policy" "bucket_policy" {
           "s3:PutObject"
         ],
         "Resource" : [
-          "arn:aws:s3:::${var.bucket_name}"
+          module.bucket.s3_bucket_arn
         ]
       }
     ]

@@ -1,0 +1,15 @@
+apiVersion: terraform.appvia.io/v1alpha1
+kind: Provider
+metadata:
+  name: aws
+spec:
+  source: secret
+  provider: aws
+  preload:
+    enabled: true
+    cluster: aws-eks-cluster-name
+    region: eu-west-2
+    context: default
+  secretRef:
+    namespace: terraform-system
+    name: aws

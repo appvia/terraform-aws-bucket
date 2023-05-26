@@ -1,16 +1,16 @@
 variable "configuration" {
   type        = string
-  description = "The name of the configuration which is used to create the resource"
+  description = "The name of the Terranetes Configuration resource (used in IAM resource names and tags)"
 }
 
 variable "cluster_name" {
   type        = string
-  description = "The name of the EKS cluster which the configuration resides in"
+  description = "The name of the EKS cluster"
 }
 
 variable "bucket_name" {
   type        = string
-  description = "The name of the S3 bucket which the configuration resides in"
+  description = "The name of the S3 bucket"
 }
 
 variable "bucket_acl" {
@@ -21,38 +21,44 @@ variable "bucket_acl" {
 
 variable "environment" {
   type        = string
-  description = "The environment which the configuration resides in"
+  description = "The environment name"
+  default     = "prod"
 }
 
-variable "eks_issuer_url" {
+variable "eks_issuer_arn" {
   type        = string
-  description = "Is the URL of the OIDC issuer of the EKS cluster."
+  description = "The ARN of the OIDC issuer for the EKS cluster"
 }
 
 variable "namespace" {
   type        = string
-  description = "Is the namespace of the service account."
+  description = "The Kubernetes Namespace that the Service Account resides in"
 }
 
 variable "service_account_name" {
   type        = string
-  description = "Is the name of the service account."
+  description = "The name of the Kubernetes Service Account to grant permissions to"
 }
 
 variable "bucket_control_object_ownership" {
   type        = bool
-  description = "Whether to control object ownership using IAM roles for service accounts."
+  description = "Whether to manage S3 Bucket Ownership Controls on this bucket"
   default     = true
 }
 
 variable "bucket_object_ownership" {
   type        = string
-  description = "The type of object ownership."
+  description = "The type of object ownership"
   default     = "ObjectWriter"
+
+  validation {
+    condition     = can(regex("^ObjectWriter|BucketOwnerPreferred|BucketOwnerEnforced$", var.bucket_object_ownership))
+    error_message = "bucket_object_ownership must be one of: ObjectWriter, BucketOwnerPreferred, BucketOwnerEnforced"
+  }
 }
 
 variable "enable_bucket_versioning" {
   type        = bool
-  description = "Whether to enable versioning for the S3 bucket."
+  description = "Whether to enable versioning for the S3 bucket"
   default     = true
 }

@@ -2,21 +2,24 @@
 apiVersion: terraform.appvia.io/v1alpha1
 kind: Configuration
 metadata:
-  name: bucket
+  name: s3-bucket
+  namespace: apps
 spec:
   module: https://github.com/appvia/terraform-aws-bucket?ref=master
+
   providerRef:
     name: aws
 
   valueFrom:
     - context: default
-      key: eks_oidc_issuer
-      name: eks_issuer_url
+      key: eks_oidc_issuer_arn
+      name: eks_issuer_arn
     - context: default
-      key: cluster_name
-      name: eks_name
+      key: eks_name
+      name: cluster_name
 
   variables:
-    bucket: rohith-testing-bucket
-    service_account_namespace: apps
+    bucket_name: my-test-s3-bucket
+    configuration: s3-bucket
+    namespace: apps
     service_account_name: default
